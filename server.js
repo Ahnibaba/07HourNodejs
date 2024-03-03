@@ -30,21 +30,17 @@ app.use(express.urlencoded({extended: false}));
 app.use(express.json());
 
 //serve static files
-app.use(express.static(path.join(__dirname, "public")));
+app.use("/", express.static(path.join(__dirname, "public")));
+app.use("/subdir", express.static(path.join(__dirname, "public")));
+
+//routes
+app.use("/", require("./routes/root"));
+app.use("/subdir", require("./routes/subdir"));
+app.use("/employees", require(path.join(__dirname, "routes", "api", "employees")));
 
 
-app.get("^/$|index.(html)?", (req, res) =>{
-  res.sendFile(path.join(__dirname, "views", "index"));
-  //res.sendFile("./views/index.html", {root: __dirname});
-});
-app.get("/new-page(.html)?", (req, res) =>{
-  res.sendFile(path.join(__dirname, "views", "new-page.html"));
-  //res.sendFile("./views/index.html", {root: __dirname});
-});
-app.get("/old-page(.html)?", (req, res) =>{
- res.status(301).redirect(path.join(__dirname, "views", "new-page.html"));
-  //res.sendFile("./views/index.html", {root: __dirname});
-});
+ 
+
 
 //Route handlers
 app.get("/hello(.html)?", (req, res, next)=>{
@@ -85,7 +81,7 @@ app.all("*", (req, res) =>{
   }else{
     res.type("txt").send("404 Not Found");
   }
-});
+});  
 
 
 app.use(errorHandler);
