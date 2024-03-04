@@ -33,7 +33,7 @@ const updateEmployee = (req, res) =>{
         employee.firstname = req.body.firstname;
     }
     if(req.body.lastname){
-        employee.firstname = req.body.lastname;
+        employee.lastname = req.body.lastname;
     }
     const filteredArray = data.employees.filter(emp => emp.id !== parseInt(req.body.id));
     const unsortedArray = [...filteredArray, employee];
@@ -44,7 +44,7 @@ const updateEmployee = (req, res) =>{
 
 const deleteEmployee = (req, res) =>{
     const employee = data.employees.find(emp => emp.id === parseInt(req.body.id));
-    if(employee){
+    if(!employee){
         return res.status(400).json({"message": `Employee ID ${req.body.id} not found`});
     }
     const filteredArray = data.employees.filter(emp => emp.id !== parseInt(req.body.id));
