@@ -4,6 +4,7 @@ const path = require("path");
 //const { getAllEmployees, createNewEmployees, updateEmployee, deleteEmployee, getEmployee } = require(path.join(__dirname, "..", "..", "controllers", "employeesController.js"));
 const employeesController = require(path.join(__dirname, "..", "..", "controllers", "employeesController.js"));
 
+
 router.route("/")
 .get(employeesController.getAllEmployees)
 .post(employeesController.createNewEmployees)

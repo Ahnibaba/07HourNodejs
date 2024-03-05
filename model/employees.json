@@ -1,14 +1,1 @@
-[
-    {   "id": 1,
-        "first name": "Dave",
-        "last name": "Gray"
-    
-    },
-
-    { 
-        "id": 2,
-        "first name": "Aniebiet",
-        "last name": "Edet"
-    
-    }
-]
+[{"id":1,"first name":"Dave","last name":"Gray"},{"id":2,"first name":"Aniebiet","last name":"Edet"},{"id":3,"firstname":"Marie","lastname":"Bliss"},{"id":4,"firstname":"Moses","lastname":"Bliss"}]

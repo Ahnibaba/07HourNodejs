@@ -4,16 +4,19 @@
     setEmployees: function (data){this.employees = data}
  };
  
+
+ 
  
  const getAllEmployees = (req, res) =>{
     res.json(data.employees);
 }
 
 const createNewEmployees = (req, res) =>{
+    const {firstname, lastname} = req.body;
     const newEmployee = {
         id: data.employees[data.employees.length - 1].id + 1 || 1,
-        firstname: req.body.firstname,
-        lastname: req.body.lastname
+        firstname: firstname,
+        lastname: lastname
     }
 
     if(!newEmployee.firstname || !newEmployee.lastname){
