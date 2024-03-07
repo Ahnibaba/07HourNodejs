@@ -2,8 +2,8 @@ const jwt = require("jsonwebtoken");
 require("dotenv").config
 
 const verifyJWT = (req, res, next) =>{
-   const authHeader = req.headers["authorization"];
-   if(!authHeader){
+   const authHeader = req.headers.authorization || req.headers.Authorization;
+   if(!authHeader?.startsWith("Bearer ")){
       return res.sendStatus(401);      //401 = Unauthorized
    }
    console.log(authHeader); //Bearer token
@@ -13,7 +13,8 @@ const verifyJWT = (req, res, next) =>{
     process.env.ACCESS_TOKEN_SECRET,
     (err, decoded) => {
         if(err) return res.sendStatus(403); //invalid token (forbidden)
-        req.user = decoded.username;
+        req.user = decoded.UserInfo.username;
+        req.roles = decoded.UserInfo.roles
         next();
     }
    )
