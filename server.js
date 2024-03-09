@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require("express");
 const app = express();
 const path = require("path");
@@ -8,9 +9,11 @@ const {corsOptions} = require(path.join(__dirname, "config", "corsOptions.js"));
 const verifyJWT = require("./middleware/verifyJWT");
 const cookieParser = require("cookie-parser");
 const credentials = require("./middleware/credentials");
-
-
+const mongoose = require("mongoose");
+const connectDB = require("./config/dbConn");
 const PORT = process.env.PORT || 3500;
+
+connectDB();
 
 
 
@@ -98,9 +101,10 @@ app.use(errorHandler);
 
 
 
+mongoose.connection.once('open', () =>{
+    console.log("connected to MongoDB");
+    app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
+})
 
-app.listen(3500, () =>{
-    console.log(`Server is running on port ${PORT}`);
-});
 
 
