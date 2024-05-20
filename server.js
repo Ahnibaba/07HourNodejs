@@ -15,7 +15,20 @@ const PORT = process.env.PORT || 3500;
 
 connectDB();
 
-
+// app.use(
+//     cors({
+//         origin: "http://localhost:3000",
+//         credentials: true,
+//         methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
+//         allowedHeaders: [
+//             "Origin",
+//             "Content-Type",
+//             "Accept",
+//             "Authorization",
+//             "X-Request-With"
+//         ]
+//     })
+// )
 
 
 //custom middleware logger
@@ -24,7 +37,7 @@ app.use(logger);
 
 app.use(credentials);
 
-
+  
 app.use(cors(corsOptions));
 
 app.use(express.urlencoded({extended: false})); 
@@ -42,12 +55,14 @@ app.use("/", express.static(path.join(__dirname, "public")));
 
 
 //routes
-app.use("/", require("./routes/root"));
+
 app.use("/register", require("./routes/register"));
 app.use("/auth", require("./routes/auth"));
+app.use("/", require("./routes/users"));
 app.use("/refresh", require("./routes/refresh"));
 app.use("/logout", require("./routes/logout"));
-
+app.use("/", require("./routes/root"));
+  
 
 
 app.use(verifyJWT);
@@ -58,6 +73,7 @@ app.use("/employees", require("./routes/api/employees"));
 //Route handlers
 app.get("/hello(.html)?", (req, res, next)=>{
     console.log("attempted to load hello.html");
+   
     next()
  
  }, (req, res) =>{
@@ -76,7 +92,7 @@ const two = (req, res, next) =>{
 }
 
 const three = (req, res, next) =>{
-    console.log("one");
+    console.log("three");
     res.send("Finished");
 }
 
@@ -85,7 +101,7 @@ app.get("/chain(.html)?", [one, two, three]);
 
 
 app.all("*", (req, res) =>{
-  res.status(404);
+  res.status(404)
 
   if(req.accepts("html")){
      res.sendFile(path.join(__dirname, "views", "404.html"));
@@ -94,7 +110,7 @@ app.all("*", (req, res) =>{
   }else{
     res.type("txt").send("404 Not Found");
   }
-});  
+});   
 
 
 app.use(errorHandler);
